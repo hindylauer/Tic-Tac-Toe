@@ -34,6 +34,7 @@ namespace TicTacToe
 
             lstbuttons.ForEach(b => b.Click += SpotButton_Click);
             btnStart.Click += BtnStart_Click;
+            chkWarnBeforeLose.CheckedChanged += WarnBeforeLose_CheckedChanged;
             /*
 1,2,3
 4,5,6
@@ -183,6 +184,11 @@ namespace TicTacToe
         {
             Color c = defaultbackcolor;
 
+            if (gamestatus != GameStatusEnum.Playing)
+            {
+                lstbuttons.Where(b => b.BackColor == Color.Orange).ToList().ForEach(b => b.BackColor = defaultbackcolor);
+            }
+
             switch (gamestatus)
             {
                 case GameStatusEnum.Tie:
@@ -194,6 +200,18 @@ namespace TicTacToe
             }
             lst.ForEach(b => b.BackColor = c);
         }
+
+        private bool IsCurrentPlayerAboutToLose()
+        {
+            TurnEnum opponent = currentturn == TurnEnum.X ? TurnEnum.O : TurnEnum.X;
+
+            return lstwinningsets.Any(l =>
+                l.Count(b => b.Text == opponent.ToString()) == 2
+                &&
+                l.Count(b => b.Text == "") == 1
+                );
+        }
+
         private void DisplayGameStatus()
         {
             string msg = "Click Start to begin Game";
@@ -201,7 +219,16 @@ namespace TicTacToe
             switch (gamestatus)
             {
                 case GameStatusEnum.Playing:
-                    msg = "Current Turn: " + currentturn.ToString();
+                    lstbuttons.Where(b => b.BackColor == Color.Orange).ToList().ForEach(b => b.BackColor = defaultbackcolor);
+                    if (chkWarnBeforeLose.Checked && IsCurrentPlayerAboutToLose())
+                    {
+                        msg = "Heads up";
+                        lstbuttons.Where(b => b.Text == currentturn.ToString()).ToList().ForEach(b => b.BackColor = Color.Orange);
+                    }
+                    else
+                    {
+                        msg = "Current Turn: " + currentturn.ToString();
+                    }
                     break;
                 case GameStatusEnum.Tie:
                     msg = "Tie";
@@ -227,6 +254,11 @@ namespace TicTacToe
         private void BtnStart_Click(object? sender, EventArgs e)
         {
             StartGame();
+        }
+
+        private void WarnBeforeLose_CheckedChanged(object? sender, EventArgs e)
+        {
+            DisplayGameStatus();
         }
     }
 }
