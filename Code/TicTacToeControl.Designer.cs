@@ -33,6 +33,7 @@
             btnStart = new Button();
             optTwoPlayer = new RadioButton();
             optPlayComputer = new RadioButton();
+            chkWarnBeforeLose = new CheckBox();
             lblStatus = new Label();
             tblSpots = new TableLayoutPanel();
             btn1 = new Button();
@@ -69,7 +70,8 @@
             // 
             // tblToolbar
             // 
-            tblToolbar.ColumnCount = 4;
+            tblToolbar.ColumnCount = 5;
+            tblToolbar.ColumnStyles.Add(new ColumnStyle());
             tblToolbar.ColumnStyles.Add(new ColumnStyle());
             tblToolbar.ColumnStyles.Add(new ColumnStyle());
             tblToolbar.ColumnStyles.Add(new ColumnStyle());
@@ -77,6 +79,7 @@
             tblToolbar.Controls.Add(btnStart, 0, 0);
             tblToolbar.Controls.Add(optTwoPlayer, 1, 0);
             tblToolbar.Controls.Add(optPlayComputer, 2, 0);
+            tblToolbar.Controls.Add(chkWarnBeforeLose, 3, 0);
             tblToolbar.Controls.Add(lblStatus, 0, 1);
             tblToolbar.Dock = DockStyle.Fill;
             tblToolbar.Location = new Point(3, 3);
@@ -122,16 +125,26 @@
             optPlayComputer.Text = "Play &Against the Computer";
             optPlayComputer.UseVisualStyleBackColor = true;
             // 
+            // chkWarnBeforeLose
+            //
+            chkWarnBeforeLose.Anchor = AnchorStyles.Left;
+            chkWarnBeforeLose.Location = new Point(813, 3);
+            chkWarnBeforeLose.Name = "chkWarnBeforeLose";
+            chkWarnBeforeLose.Size = new Size(140, 54);
+            chkWarnBeforeLose.TabIndex = 3;
+            chkWarnBeforeLose.Text = "Warn me";
+            chkWarnBeforeLose.UseVisualStyleBackColor = true;
+            //
             // lblStatus
             // 
             lblStatus.BackColor = Color.LightYellow;
             lblStatus.BorderStyle = BorderStyle.FixedSingle;
-            tblToolbar.SetColumnSpan(lblStatus, 4);
+            tblToolbar.SetColumnSpan(lblStatus, 5);
             lblStatus.Dock = DockStyle.Fill;
             lblStatus.Location = new Point(3, 60);
             lblStatus.Name = "lblStatus";
             lblStatus.Size = new Size(956, 61);
-            lblStatus.TabIndex = 3;
+            lblStatus.TabIndex = 4;
             lblStatus.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // tblSpots
@@ -273,6 +286,7 @@
         protected Button btnStart;
         protected RadioButton optTwoPlayer;
         protected RadioButton optPlayComputer;
+        protected CheckBox chkWarnBeforeLose;
         protected Label lblStatus;
         protected TableLayoutPanel tblSpots;
         protected Button btn1;
